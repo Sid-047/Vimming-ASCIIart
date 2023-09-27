@@ -5,7 +5,6 @@ import time
 import numpy
 import webbrowser
 from PIL import Image
-import mysql.connector
 from datetime import datetime
 
 exec_Time=datetime.now().strftime("%r").replace(":",";")
@@ -150,16 +149,6 @@ with open("/CsvFiles/MainSet/CompleteCsvData.csv",'a') as csvf:
     w=csv.writer(csvf)
     w.writerows(csvData_)
 
-con=mysql.connector.connect(host="localhost", user="root", passwd="12345", database="Internship")
-cur=con.cursor()
-try:
-    cur.execute("drop table AnalysisDataSet")
-except:
-    pass
-cur.execute("create table AnalysisDataSet(Date varchar(10) not null, Time varchar(15) not null,\
-            ImageFileName varchar(200) not null, FileSize_KB float not null, OriginalType_Cols int not null,\
-            80Cols_Type_Secs varchar(30), 150Cols_Type_Secs varchar(30), 250Cols_Type_Secs varchar(30),\
-            Original_Type_Secs float, Writing_Doc_Secs varchar(30), Writing_WebPage_Secs varchar(30))")
 with open("/CsvFiles\\MainSet\\CompleteCsvData.csv",'r') as csvf:
     r=csv.reader(csvf)
     for i in r:
@@ -169,8 +158,6 @@ with open("/CsvFiles\\MainSet\\CompleteCsvData.csv",'r') as csvf:
                     i[i.index(j)]="NULL"
             print(tuple(i))
             print(len(i))
-            cur.execute("insert into AnalysisDataSet values{}".format(tuple(i)))
-con.commit()
 
 for page in pages:
     loc="/WebPages/"+page
