@@ -113,24 +113,6 @@ for pic in images:
     print("\nWord Doc ",pic," Written!")
     print("Time Consumed: ",Doc_t,"Secs\n")
     
-    T_page1=time.time()
-    pages.append('imagePage%s.html'%str(imgc))
-    fhtml=open('/WebPages/imagePage%s.html'%str(imgc),'w')
-    ip_set=["<html>","<meta name='viewport' content='device-width, initial-scale=1.0'>",\
-    "<title>",pic,"</title>","<link rel='icon' type='image/x-icon' href='%s'>"%(loc),\
-    "<body>","<style>","*{background-color:grey}",\
-    "pre{text-align:center;font-family:Courier New;font-weight:700;font-size: %dpx}"%(px+2),
-    "</style>","<pre>"]
-    ip_set_=["</pre>","</body>","</html>"]
-    complete_ip=ip_set+imgSet+ip_set_
-    for io in complete_ip:
-        fhtml.write(io)
-    fhtml.close()
-    T_page2=time.time()
-    T_page=T_page2-T_page1
-    print("WebPage Created")
-    print("Time for Creation: ",T_page,"Secs\n")
-    
     csvSet=[pic, round(os.path.getsize(loc)/1024, 2), pic_w]+csvSet
     csvData.append(csvSet+[T_doc, T_page])
     csvData_.append([exec_Date, exec_Time]+csvSet+[T_doc, T_page])
