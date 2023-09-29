@@ -1,9 +1,7 @@
 import os
-import csv
 import docx
 import time
 import numpy
-import webbrowser
 from PIL import Image
 from datetime import datetime
 
@@ -26,8 +24,6 @@ for i in os.walk(os.getcwd()):
 imgc=0
 pages=[]
 T_data=[]
-csvData=[]
-csvData_=[]
 for pic in images:
     imgc+=1
     print("\n\n\n-->",pic)
@@ -36,11 +32,9 @@ for pic in images:
     ar=numpy.array(img)
     pic_w,pic_h=ar.shape
     avg_data=numpy.average(ar.reshape(pic_w,pic_h))
-    csvSet=[None, None, None, None]
     types=[80,150,250,pic_w]
     imgSet=[]
     T_type=0
-    csv_c=-1
     cols_w=0
     Doc_t=0
     for cols in types:
@@ -48,9 +42,6 @@ for pic in images:
         if cols>pic_w:
             cols=pic_w
             cols_w+=1
-            if csvSet[len(csvSet)-1]!=T_type:
-                csvSet[len(csvSet)-1]=pic_w
-                print("Corrected Width:",cols)
             types.pop()
         if cols_w<=1:
             scale=0.47
@@ -93,11 +84,6 @@ for pic in images:
             print("Resolution Type: ",cols," Done!")
             print(">No. Of Characters: ", chrC)
             print("Execution time: ",T_type,"Secs\n")
-            if cols!=pic_w:
-                csv_c+=1
-                csvSet[csv_c]=T_type
-            else:
-                csvSet[len(csvSet)-1]=T_type
             T_doc1=time.time()
             doc.add_heading("--->"+pic+" CharacterCount: "+str(chrC))
             doc.add_paragraph("\n\n\n\n\n\n\n\n")
@@ -113,34 +99,4 @@ for pic in images:
     print("\nWord Doc ",pic," Written!")
     print("Time Consumed: ",Doc_t,"Secs\n")
     
-    csvSet=[pic, round(os.path.getsize(loc)/1024, 2), pic_w]+csvSet
-    csvData.append(csvSet+[T_doc, T_page])
-    csvData_.append([exec_Date, exec_Time]+csvSet+[T_doc, T_page])
-    
 doc.save("DaWm.docx")
-
-
-with open("/CsvFiles/CsvFile_{}.csv".format(exec_Date+"__"+exec_Time),'w') as csvf:
-    w=csv.writer(csvf)
-    h=["ImgFileName", "FileSize(KB)", "OriginalType_Cols", "80Cols_Type(Secs)", "150Cols_Type(Secs)",\
-    "250Cols_Type(Secs)", "Original_Type(Secs)", "Writing_Doc(Secs)", "Writing_WebPage(Secs)"]
-    w.writerow(h)
-    w.writerows(csvData)
-
-with open("/CsvFiles/MainSet/CompleteCsvData.csv",'a') as csvf:
-    w=csv.writer(csvf)
-    w.writerows(csvData_)
-
-with open("/CsvFiles\\MainSet\\CompleteCsvData.csv",'r') as csvf:
-    r=csv.reader(csvf)
-    for i in r:
-        if i!=[]:
-            for j in i:
-                if j=='':
-                    i[i.index(j)]="NULL"
-            print(tuple(i))
-            print(len(i))
-
-for page in pages:
-    loc="/WebPages/"+page
-    webbrowser.open(loc)
