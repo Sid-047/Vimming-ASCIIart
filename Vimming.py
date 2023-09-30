@@ -16,7 +16,7 @@ for x in sec:
     x.left_margin=docx.shared.Cm(1.27)
 
 s_=' '
-gs="@$#&%*+=:^;~-.{}".format(s_)
+grayScale="@$#&%*+=:^;~-.{}".format(s_)
 os.chdir("/Images")
 for i in os.walk(os.getcwd()):
     dir_=i[0]
@@ -33,7 +33,7 @@ for pic in images:
     pic_w,pic_h=ar.shape
     avg_data=numpy.average(ar.reshape(pic_w,pic_h))
     types=[80,150,250,pic_w]
-    imgSet=[]
+    imgrayScaleet=[]
     T_type=0
     cols_w=0
     Doc_t=0
@@ -61,14 +61,14 @@ for pic in images:
                     ar=numpy.array(img_)
                     w,h=ar.shape
                     avg_data=numpy.average(ar.reshape(w,h))
-                    gsVal=gs[int((avg_data*14)/255)]
-                    Val+=gsVal
+                    grayScaleVal=grayScale[int((avg_data*14)/255)]
+                    Val+=grayScaleVal
                 Val='\n'+Val
                 if len(set(list(Val)))==2:
                     pass
                 else:
                     imgList[i]=Val
-            imgSet+=imgList+['<br><br><br><br><br>']
+            imgrayScaleet+=imgList+['<br><br><br><br><br>']
             imgData=''.join(imgList)
             size_dict={50:7.5,100:5.5,150:4.5,200:3.5,250:3,\
             300:2.5,350:2,400:1.5,450:1} 
