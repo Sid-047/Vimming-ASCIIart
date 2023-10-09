@@ -2,11 +2,14 @@ import time
 import numpy
 from tkinter import *
 from PIL import Image
+from tkinter import filedialog
 
 s_=' '
 grayScale="@$#&%*+=:^;~-.{}".format(s_)
 
-img=Image.open(loc).convert('L')
+tk = Tk()
+inImg = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png *.gif *.bmp *.tiff")])
+img=Image.open(inImg).convert('L')
 ar=numpy.array(img)
 pic_w,pic_h=ar.shape
 avg_data=numpy.average(ar.reshape(pic_w,pic_h))
