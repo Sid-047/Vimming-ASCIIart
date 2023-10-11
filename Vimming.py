@@ -23,7 +23,7 @@ for i in range(rows):
     y=int(i*height)
     y_=int((i+1)*height)
     Val=""
-    for j in range():
+    for j in range(dimType):
         x=int(j*width)
         x_=int((j+1)*width)
         img_=img.crop((x,y,x_,y_))
@@ -36,7 +36,7 @@ for i in range(rows):
     if len(set(list(Val)))==2:
         pass
     else:
-        imgList[i]=Val
+        imgList.append(Val)
 
 imgData=''.join(imgList)
 print(imgData)
