@@ -9,6 +9,7 @@ grayScale="@$#&%*+=:^;~-.{}".format(s_)
 
 tk = Tk()
 inImg = filedialog.askopenfilename(filetypes=[("Image files", "*.jpg *.jpeg *.png *.gif *.bmp *.tiff")])
+t1 = time.time()
 img=Image.open(inImg).convert('L')
 ar=numpy.array(img)
 pic_w,pic_h=ar.shape
@@ -40,3 +41,6 @@ for i in range(rows):
 
 imgData=''.join(imgList)
 print(imgData)
+
+t2 = time.time()
+print("ExecTime: ", (t2-t1))
